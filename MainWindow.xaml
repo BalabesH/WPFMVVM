@@ -1,0 +1,96 @@
+﻿<Window
+    x:Class="WPFMVVM.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WPFMVVM"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MVVM Pattern"
+    Width="800"
+    Height="550"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0.7*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0.1*" />
+        </Grid.RowDefinitions>
+        <DataGrid
+            Name="UsersList"
+            Margin="0,0,0,10"
+            AutoGenerateColumns="False"
+            Background="#FFB1C6C8"
+            ItemsSource="{Binding People}"
+            SelectedValue="{Binding SelectedUser}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="3*"
+                    Binding="{Binding ID}"
+                    FontSize="14"
+                    Header="ID" />
+                <DataGridTextColumn
+                    Width="25*"
+                    Binding="{Binding LOGIN}"
+                    FontSize="14"
+                    Header="Логин" />
+                <DataGridTextColumn
+                    Width="22*"
+                    Binding="{Binding FIRST_NAME}"
+                    FontSize="14"
+                    Header="Имя" />
+                <DataGridTextColumn
+                    Width="25*"
+                    Binding="{Binding LAST_NAME}"
+                    FontSize="14"
+                    Header="Фамилия" />
+                <DataGridTextColumn
+                    Width="25*"
+                    Binding="{Binding MIDDLE_NAME}"
+                    FontSize="14"
+                    Header="Отчество" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <StackPanel Grid.Column="1" DataContext="{Binding SelectedUser}">
+            <TextBlock Text="Выбранный элемент" />
+            <TextBlock Text="Логин" />
+            <TextBox Text="{Binding LOGIN, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Имя" />
+            <TextBox Text="{Binding FIRST_NAME, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Фамилия" />
+            <TextBox Text="{Binding LAST_NAME, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Отчество" />
+            <TextBox Text="{Binding MIDDLE_NAME, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button
+                x:Name="Add_btn"
+                Command="{Binding AddCommand}"
+                Content="Добавление" Width="80" Height="28" />
+            <Button
+                x:Name="Delete_btn"
+                Width="80" Height="28"
+                Command="{Binding RemoveCommand}"
+                CommandParameter="{Binding SelectedUser}"
+                Content="Удаление" />
+            <!--  CommandParameter кнопка устанавливает объект, который передается команде  -->
+        </StackPanel>
+    </Grid>
+</Window>
