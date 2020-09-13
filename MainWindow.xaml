@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WPFMVVM"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:i="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core" xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
     Title="MVVM Pattern"
     Width="800"
     Height="550"
@@ -30,13 +30,21 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="0.1*" />
         </Grid.RowDefinitions>
+
+        <Menu Grid.ColumnSpan="2" >
+            <MenuItem Header="Файл" Height="24" Width="43">
+                <MenuItem Header="Открыть список (" Command="{Binding OpenCommand}" />
+                <MenuItem Header="Сохранить" Command="{Binding SaveCommand}" />
+            </MenuItem>
+        </Menu>
+        
         <DataGrid
             Name="UsersList"
-            Margin="0,0,0,10"
+            Margin="0,23,329,10"
             AutoGenerateColumns="False"
             Background="#FFB1C6C8"
             ItemsSource="{Binding People}"
-            SelectedValue="{Binding SelectedUser}">
+            SelectedValue="{Binding SelectedUser}" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="3*"
@@ -66,7 +74,6 @@
             </DataGrid.Columns>
         </DataGrid>
 
-
         <StackPanel Grid.Column="1" DataContext="{Binding SelectedUser}">
             <TextBlock Text="Выбранный элемент" />
             <TextBlock Text="Логин" />
@@ -90,6 +97,18 @@
                 Command="{Binding RemoveCommand}"
                 CommandParameter="{Binding SelectedUser}"
                 Content="Удаление" />
+            <Button
+                x:Name="Copy_btn"
+                Width="80" Height="28"
+                Content="Копирование">
+                <i1:Interaction.Triggers>
+                    <i1:EventTrigger EventName="Click">
+                        <i1:InvokeCommandAction
+                            Command="{Binding CopyCommand}"
+                            CommandParameter="{Binding SelectedUser}" />
+                    </i1:EventTrigger>
+                </i1:Interaction.Triggers>
+            </Button>
             <!--  CommandParameter кнопка устанавливает объект, который передается команде  -->
         </StackPanel>
     </Grid>

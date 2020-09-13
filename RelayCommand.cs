@@ -30,5 +30,7 @@ namespace WPFMVVM
         {
             this.execute(parameter);
         }
+
+        
     }
 }

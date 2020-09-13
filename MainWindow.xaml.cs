@@ -23,7 +23,7 @@ namespace WPFMVVM
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModel();
+            DataContext = new ViewModel(new DefaultDialogService(), new JsonFileService());
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

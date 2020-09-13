@@ -23,6 +23,7 @@ namespace WPFMVVM
                 OnCollectionChanged("LOGIN");
             }
         }
+
         public virtual string FIRST_NAME
         {
             get { return first_name; }
