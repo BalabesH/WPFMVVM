@@ -13,12 +13,12 @@ namespace WPFMVVM
     [Table("People", Schema = "dbo")]
     public class Model : INotifyPropertyChanged
     {
-       private string login;
-       private string first_name;
-       private string last_name;
-       private string middle_name;
-
-       public int ID { get; set; }
+        public string login;
+        public string first_name;
+        public string last_name;
+        public string middle_name;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
 
        public virtual string LOGIN
         {
