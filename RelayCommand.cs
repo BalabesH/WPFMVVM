@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
 namespace WPFMVVM
 {
-    public class RelayCommand: ICommand
+    public class RelayCommand : ICommand
+    /*ICommand, благодаря чему с помощью подобных команды мы сможем направлять вызовы к ViewModel.
+     * Ключевым здесь является метод Execute(), который получает параметр и выполняет действие, 
+     * переданное через конструктор команды.*/
     {
         private Action<object> execute;
         private Func<object, bool> canExecute;
@@ -26,11 +27,11 @@ namespace WPFMVVM
         {
             return this.canExecute == null || this.canExecute(parameter);
         }
-        public void Execute (object parameter) //выполняет логику команды
+        public void Execute(object parameter) //выполняет логику команды
         {
             this.execute(parameter);
         }
 
-        
+
     }
 }

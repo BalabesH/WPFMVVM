@@ -3,10 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
+    xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:WPFMVVM"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:i="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core" xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MVVM Pattern"
-    Width="800"
+    Width="550"
     Height="550"
     mc:Ignorable="d">
     <Window.Resources>
@@ -22,29 +24,27 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="0.7*" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="0.1*" />
         </Grid.RowDefinitions>
 
-        <Menu Grid.ColumnSpan="2" >
-            <MenuItem Header="Файл" Height="24" Width="43">
-                <MenuItem Header="Открыть список (" Command="{Binding OpenCommand}" />
-                <MenuItem Header="Сохранить" Command="{Binding SaveCommand}" />
+        <Menu Grid.ColumnSpan="2">
+            <MenuItem
+                Width="43"
+                Height="24"
+                Header="Файл">
+                <MenuItem Command="{Binding OpenCommand}" Header="Открыть список (" />
+                <MenuItem Command="{Binding SaveCommand}" Header="Сохранить" />
             </MenuItem>
         </Menu>
-        
+
         <DataGrid
-            Name="UsersList"
-            Margin="0,23,329,10"
+            x:Name="UsersList"
+            Margin="0,23,0,10"
             AutoGenerateColumns="False"
             Background="#FFB1C6C8"
-            ItemsSource="{Binding People}"
-            SelectedValue="{Binding SelectedUser}" Grid.ColumnSpan="2">
+            ItemsSource="{Binding People}">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="3*"
@@ -74,41 +74,54 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Column="1" DataContext="{Binding SelectedUser}">
-            <TextBlock Text="Выбранный элемент" />
-            <TextBlock Text="Логин" />
-            <TextBox Text="{Binding LOGIN, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Имя" />
-            <TextBox Text="{Binding FIRST_NAME, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Фамилия" />
-            <TextBox Text="{Binding LAST_NAME, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Отчество" />
-            <TextBox Text="{Binding MIDDLE_NAME, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
-
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
             <Button
                 x:Name="Add_btn"
+                Width="100"
+                Height="35"
                 Command="{Binding AddCommand}"
-                Content="Добавление" Width="80" Height="28" />
+                Content="Добавить"
+                FontSize="13"
+                FontWeight="Bold" />
+            <!--  Command="{Binding AddCommand}"  -->
             <Button
                 x:Name="Delete_btn"
-                Width="80" Height="28"
+                Width="100"
+                Height="35"
+                Command="{Binding DeleteCommand}"
+                CommandParameter="{Binding ElementName=UsersList, Path=SelectedItem}"
+                Content="Удалить"
+                FontSize="13"
+                FontWeight="Bold" />
+            <!--
                 Command="{Binding RemoveCommand}"
                 CommandParameter="{Binding SelectedUser}"
-                Content="Удаление" />
+            -->
             <Button
                 x:Name="Copy_btn"
-                Width="80" Height="28"
-                Content="Копирование">
+                Width="100"
+                Height="35"
+                Content="Копировать"
+                FontSize="13"
+                FontWeight="Bold">
                 <i1:Interaction.Triggers>
                     <i1:EventTrigger EventName="Click">
-                        <i1:InvokeCommandAction
-                            Command="{Binding CopyCommand}"
-                            CommandParameter="{Binding SelectedUser}" />
+                        <i1:InvokeCommandAction Command="{Binding CopyCommand}" CommandParameter="{Binding SelectedItem}" />
                     </i1:EventTrigger>
                 </i1:Interaction.Triggers>
             </Button>
+            <Button
+                x:Name="Edit"
+                Width="100"
+                Height="35"
+                Command= "{Binding EditCommand}"
+                CommandParameter="{Binding ElementName=UsersList, Path=SelectedItem}"
+                Content="Редактировать"
+                FontSize="13"
+                FontWeight="Bold" />
             <!--  CommandParameter кнопка устанавливает объект, который передается команде  -->
         </StackPanel>
     </Grid>

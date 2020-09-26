@@ -4,15 +4,21 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Data.SqlClient;
+using System.DirectoryServices.ActiveDirectory;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WPFMVVM
 {
-    class Model : INotifyPropertyChanged
+    [Table("People", Schema = "dbo")]
+    public class Model : INotifyPropertyChanged
     {
        private string login;
        private string first_name;
        private string last_name;
        private string middle_name;
+
+       public int ID { get; set; }
 
        public virtual string LOGIN
         {
